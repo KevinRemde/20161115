@@ -73,8 +73,8 @@
 		"fsPIPName" : "fsPublicIP",
 		"wsPIPName" : "wsPublicIP",
 		"virtualNetworkAddressRange" : "192.168.0.0/16",
-		"labSubnet" : "192.168.10.0/24",
-		"feSubnet" : "192.168.200.0/24",
+		"labSubnetDef" : "192.168.10.0/24",
+		"feSubnetDef" : "192.168.200.0/24",
 		"fsBEIP": "192.168.10.4",
 		"wsBEIP": "192.168.10.20", 
 		"vnetID" : "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
@@ -145,13 +145,13 @@
 						"value" : "[variables('feSubnetName')]"
 					},
 					"subnet1Range" : {
-						"value" : "[variables('feSubnet')]"
+						"value" : "[variables('feSubnetDef')]"
 					},
 					"subnet2Name" : {
 						"value" : "[variables('labSubnetName')]"
 					},
 					"subnet2Range" : {
-						"value" : "[variables('labSubnet')]"
+						"value" : "[variables('labSubnetDef')]"
 					}
 				}
 			}
