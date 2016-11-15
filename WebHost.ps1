@@ -1,15 +1,11 @@
 ﻿
 Configuration WebHost
 {
-    param 
-    ( 
-        # Target nodes to apply the configuration 
-        [string[]]$NodeName = 'localhost' 
-    ) 
+    param ($MachineName) 
 
     Import-DscResource –ModuleName 'PSDesiredStateConfiguration'
 
-    Node $NodeName
+    Node $MachineName
     {
         # Install the IIS role 
         WindowsFeature IIS 
