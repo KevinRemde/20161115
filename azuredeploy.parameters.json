@@ -5,12 +5,6 @@
 		"location": {
 			"value" : "West US"
 		},
-		"fileServerName" : {
-			"value" : "fileserver"
-		},
-		"fileServerSize" : {
-			"value" : "Standard_D1"
-		},
 		"webServerName" : {
 			"value" : "webserver"
 		},
@@ -24,7 +18,7 @@
 			"value" : "Passw0rd!"
 		},
 		"assetLocation" : {
-			"value" : "https://raw.githubusercontent.com/KevinRemde/AADSCDemoBase/master/"
+			"value" : "https://raw.githubusercontent.com/KevinRemde/20161115/master/"
 		}
 	}
 }

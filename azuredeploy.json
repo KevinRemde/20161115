@@ -16,27 +16,6 @@
 				"description" : "The region to deploy the resources into"
 			}
 		},
-		"fileServerName" : {
-			"type" : "string",
-			"defaultValue" : "fileserver",
-			"metadata" : {
-				"description" : "Name for the File Server"
-			}
-		},
-		"fileServerDNSName" : {
-			"type" : "string",
-			"defaultValue" : "fskardns",
-			"metadata" : {
-				"description" : "Unique DNS prefix for the File Server"
-			}
-		},
-		"fileServerSize" : {
-			"type" : "string",
-			"defaultValue" : "Standard_D1",
-			"metadata" : {
-				"description" : "The size of the virtual machine"
-			}
-		},
 		"webServerName" : {
 			"type" : "string",
 			"defaultValue" : "webserver",
@@ -80,15 +59,13 @@
 		}
 	},
 	"variables" : {
-		"fileServerName": "fileserver",
-		"webServerName": "webserver",
 		"fileServerStorageAccountName" : "[concat(uniquestring(resourceGroup().id), parameters('fileServerName'))]",
 		"webServerStorageAccountName" : "[concat(uniquestring(resourceGroup().id), parameters('webServerName'))]",
 		"imagePublisher" : "MicrosoftWindowsServer",
 		"imageOffer" : "WindowsServer",
 		"imageSKU" : "2008-R2-Datacenter",
 		"apiVersion" : "2015-06-15",
-		"virtualNetworkName" : "demoVNet",
+		"virtualNetworkName" : "CGIVNet",
 		"feSubnetName" : "feSubnet",
 		"labSubnetName" : "labSubnet",
 		"fsNICName" : "fsNIC",
@@ -104,7 +81,7 @@
 		"feSubnetId" : "[concat(variables('vnetID'),'/subnets/', variables('feSubnetName'))]",
 		"labSubnetId" : "[concat(variables('vnetID'),'/subnets/', variables('labSubnetName'))]",
 		"vnetTemplateUri" : "[concat(parameters('assetLocation'),'vnet.json')]",
-		"vnetwithDNSTemplateUri" : "[concat(parameters('assetLocation'),'vnet-with-dns-server.json')]",
+		"vnetwithDNSTemplateUri" : "[concat(parameters('assetLocation'),'vnet-with-dns-server.json')]"
 	},
 	"resources" : [{
 			"type" : "Microsoft.Network/publicIPAddresses",
@@ -236,101 +213,6 @@
 			}
 		}, {
 			"type" : "Microsoft.Compute/virtualMachines",
-			"apiVersion" : "[variables('apiVersion')]",
-			"name" : "[parameters('fileServerName')]",
-			"location" : "[resourceGroup().location]",
-			"dependsOn" : [
-				"[resourceId('Microsoft.Storage/storageAccounts',variables('fileServerStorageAccountName'))]",
-				"[resourceId('Microsoft.Network/networkInterfaces',variables('fsNICName'))]"
-			],
-			"properties" : {
-				"hardwareProfile" : {
-					"vmSize" : "[parameters('fileServerSize')]"
-				},
-				"osProfile" : {
-					"computerName" : "[parameters('fileServerName')]",
-					"adminUsername" : "[parameters('vmUserName')]",
-					"adminPassword" : "[parameters('vmPassword')]"
-				},
-				"storageProfile" : {
-					"imageReference" : {
-						"publisher" : "[variables('imagePublisher')]",
-						"offer" : "[variables('imageOffer')]",
-						"sku" : "[variables('imageSKU')]",
-						"version" : "latest"
-					},
-					"osDisk" : {
-						"name" : "osdisk",
-						"vhd" : {
-							"uri" : "[concat('http://',variables('fileServerStorageAccountName'),'.blob.core.windows.net/vhds/','osdisk.vhd')]"
-						},
-						"caching" : "ReadWrite",
-						"createOption" : "FromImage"
-					}
-				},
-				"networkProfile" : {
-					"networkInterfaces" : [{
-							"id" : "[resourceId('Microsoft.Network/networkInterfaces',variables('fsNICName'))]"
-						}
-					]
-				}
-			},
-			"resources" : [{
-				"type" : "Microsoft.Compute/virtualMachines/extensions",
-				"name" : "[concat(variables('dcVMName'),'/createADForest')]",
-				"apiVersion" : "[variables('apiVersion')]",
-				"location" : "[resourceGroup().location]",
-				"dependsOn" : [
-					"[resourceId('Microsoft.Compute/virtualMachines', variables('dcVMName'))]"
-				],
-				"properties" : {
-					"publisher" : "Microsoft.Powershell",
-					"type" : "DSC",
-					"typeHandlerVersion" : "2.11",
-					"autoUpgradeMinorVersion" : true,
-					"settings" : {
-						"ModulesUrl" : "[variables('dcModulesURL')]",
-						"ConfigurationFunction" : "[variables('dcConfigurationFunction')]",
-						"Properties" : {
-							"DomainName" : "[parameters('domainName')]",
-							"AdminCreds" : {
-								"UserName" : "[parameters('domainUsername')]",
-								"Password" : "PrivateSettingsRef:AdminPassword"
-							}
-						}
-					},
-					"protectedSettings" : {
-						"Items" : {
-							"AdminPassword" : "[parameters('domainPassword')]"
-						}
-					}
-				}
-			}, {		
-				"type" : "Microsoft.Compute/virtualMachines/extensions",
-				"name" : "[concat(variables('dcVMName'),'/RunAutomation')]",
-				"apiVersion" : "[variables('apiVersion')]",
-				"location" : "[resourceGroup().location]",
-				"dependsOn" : [
-					"[concat('Microsoft.Compute/virtualMachines/', variables('dcVMName'))]",
-					"[concat('Microsoft.Compute/virtualMachines/', variables('dcVMName'), '/extensions/createADForest')]"
-				],
-				"properties" : {
-					"publisher" : "Microsoft.Compute",
-					"type" : "CustomScriptExtension",
-					"typeHandlerVersion" : "1.3",
-					"autoUpgradeMinorVersion" : "true",
-					"settings" : {
-						"fileUris" : [
-							"[variables('dcCustomScriptFileUri')]"
-						],
-						"commandToExecute" : "[variables('dcCommandToExecute')]"
-					},
-					"protectedSettings" : null
-				}
-			}
-		]
-		}, {
-			"type" : "Microsoft.Compute/virtualMachines",
 			"name" : "[parameters('webServerName')]",
 			"apiVersion" : "[variables('apiVersion')]",
 			"location" : "[resourceGroup().location]",
@@ -375,7 +257,30 @@
 						"storageUri" : "[concat('http://',variables('webServerStorageAccountName'),'.blob.core.windows.net')]"
 					}
 				}
-			}
+			},
+			"resources" : [{
+				"type" : "Microsoft.Compute/virtualMachines/extensions",
+				"name" : "[concat(parameters('webServerName'),'/WebHost')]",
+				"apiVersion" : "[variables('apiVersion')]",
+				"location" : "[resourceGroup().location]",
+				"dependsOn" : [
+					"[resourceId('Microsoft.Compute/virtualMachines', parameters('webServerName'))]"
+				],
+					"properties" : {
+						"publisher" : "Microsoft.Powershell",
+						"type" : "DSC",
+						"typeHandlerVersion" : "2.8",
+						"settings" : {
+							"ModulesUrl" : "[concat(parameters('assetLocation'),'WebHost.ps1.zip')]",
+							"ConfigurationFunction" : "WebHost.ps1\\WebHost",
+							"Properties" : {
+								"MachineName" : "[parameters('webServerName')]"
+							}
+						},
+						"protectedSettings" : null
+					}
+				}
+			]
 		}
 	]
 }
