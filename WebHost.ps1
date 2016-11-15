@@ -3,8 +3,6 @@ Configuration WebHost
 {
     param ($MachineName) 
 
-    Import-DscResource –ModuleName 'PSDesiredStateConfiguration'
-
     Node $MachineName
     {
         # Install the IIS role 
