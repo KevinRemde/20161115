@@ -62,7 +62,7 @@
 		"webServerStorageAccountName" : "[concat(uniquestring(resourceGroup().id), parameters('webServerName'))]",
 		"imagePublisher" : "MicrosoftWindowsServer",
 		"imageOffer" : "WindowsServer",
-		"imageSKU" : "2008-R2-SP1",
+		"imageSKU" : "2016-Datacenter",
 		"apiVersion" : "2015-06-15",
 		"virtualNetworkName" : "CGIVNet",
 		"feSubnetName" : "feSubnet",
