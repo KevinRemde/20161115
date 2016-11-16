@@ -20,7 +20,7 @@
 			"type" : "string",
 			"defaultValue" : "webserver",
 			"metadata" : {
-				"description" : "Name for the File Server"
+				"description" : "Name for the Web Server"
 			}
 		},
 		"webServerDNSName": {
