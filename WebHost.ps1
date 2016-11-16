@@ -50,10 +50,10 @@
             Ensure="Present"
             Name="FS-FileServer"
         }
-	WindowsFeature MSMQ-Server
+	WindowsFeature MessageQueueFeature
 	{
-	    Ensure=Present"
-	    Name="MSMQ-Server"
-	}
+	    Ensure = "Present"
+	    Name = "MSMQ"
+	}		
     }
 }
