@@ -44,5 +44,16 @@
             Ensure          = "Present" 
             Name            = "Web-Mgmt-Console"
         }
+
+        WindowsFeature FileServer 
+	{
+            Ensure="Present"
+            Name="FS-FileServer"
+        }
+	WindowsFeature MSMQ-Server
+	{
+	    Ensure=Present"
+	    Name="MSMQ-Server"
+	}
     }
 }

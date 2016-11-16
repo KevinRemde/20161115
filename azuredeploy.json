@@ -56,19 +56,27 @@
 				"description" : "The location of resources such as templates and DSC modules that the script is dependent"
 			},
 			"defaultValue": "https://raw.githubusercontent.com/KevinRemde/20161115/master/"
+		},
+		"imageSKU" : {
+			"type" : "string",
+			"defaultValue": "2016-Datacenter",
+			"metadata" :{
+				"description": "This is the Windows Server version SKU image used here"
+			}
 		}
 	},
 	"variables" : {
 		"webServerStorageAccountName" : "[concat(uniquestring(resourceGroup().id), parameters('webServerName'))]",
 		"imagePublisher" : "MicrosoftWindowsServer",
 		"imageOffer" : "WindowsServer",
-		"imageSKU" : "2016-Datacenter",
 		"apiVersion" : "2015-06-15",
 		"virtualNetworkName" : "CGIVNet",
 		"feSubnetName" : "feSubnet",
 		"labSubnetName" : "labSubnet",
 		"fsNICName" : "fsNIC",
 		"wsNICName" : "wsNIC",
+		"wsOSDiskSizeGB" : 80,
+		"wsDataDiskSizeGB" : 120,
 		"fsPIPName" : "fsPublicIP",
 		"wsPIPName" : "wsPublicIP",
 		"virtualNetworkAddressRange" : "192.168.0.0/16",
@@ -185,17 +193,29 @@
 					"imageReference" : {
 						"publisher" : "[variables('imagePublisher')]",
 						"offer" : "[variables('imageOffer')]",
-						"sku" : "[variables('imageSKU')]",
+						"sku" : "[parameters('imageSKU')]",
 						"version" : "latest"
 					},
 					"osDisk" : {
-						"name" : "osdisk",
+						"name" : "wsosdisk",
 						"vhd" : {
 							"uri" : "[concat('http://',variables('webServerStorageAccountName'),'.blob.core.windows.net/vhds/myvmosdisk.vhd')]"
 						},
 						"caching" : "ReadWrite",
-						"createOption" : "FromImage"
-					}
+						"createOption" : "FromImage",
+						"diskSizeGB" : "[variables('wsOSDiskSizeGB')]"
+					},
+					"dataDisks" : [{
+							"vhd" : {
+								"uri" : "[concat('http://',variables('webServerStorageAccountName'),'.blob.core.windows.net/vhds/myvmdatadisk.vhd')]"
+							},
+							"name" : "wsdatadisk",
+							"caching" : "None",
+							"createOption" : "Empty",
+							"diskSizeGB" : "[variables('wsDataDiskSizeGB')]",
+							"lun" : 0
+						}
+					]
 				},
 				"networkProfile" : {
 					"networkInterfaces" : [{

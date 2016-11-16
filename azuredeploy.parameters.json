@@ -19,6 +19,9 @@
 		},
 		"assetLocation" : {
 			"value" : "https://raw.githubusercontent.com/KevinRemde/20161115/master/"
+		},
+		"imageSku" : {
+			"value" : "2016-Datacenter"
 		}
 	}
 }
