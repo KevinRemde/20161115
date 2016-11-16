@@ -75,7 +75,6 @@
 		"labSubnetName" : "labSubnet",
 		"fsNICName" : "fsNIC",
 		"wsNICName" : "wsNIC",
-		"wsOSDiskSizeGB" : 80,
 		"wsDataDiskSizeGB" : 120,
 		"fsPIPName" : "fsPublicIP",
 		"wsPIPName" : "wsPublicIP",
@@ -202,8 +201,7 @@
 							"uri" : "[concat('http://',variables('webServerStorageAccountName'),'.blob.core.windows.net/vhds/myvmosdisk.vhd')]"
 						},
 						"caching" : "ReadWrite",
-						"createOption" : "FromImage",
-						"diskSizeGB" : "[variables('wsOSDiskSizeGB')]"
+						"createOption" : "FromImage"
 					},
 					"dataDisks" : [{
 							"vhd" : {
