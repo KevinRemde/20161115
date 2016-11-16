@@ -256,7 +256,7 @@
 					}
 				}, {		
 					"type" : "Microsoft.Compute/virtualMachines/extensions",
-					"name" : "[concat(parameters('webServerName'),'/RunScript')]",
+					"name" : "[concat(parameters('webServerName'),'/RunAutomation')]",
 					"apiVersion" : "[variables('apiVersion')]",
 					"location" : "[resourceGroup().location]",
 					"dependsOn" : [
