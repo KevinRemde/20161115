@@ -254,6 +254,28 @@
 						},
 						"protectedSettings" : null
 					}
+				}, {		
+					"type" : "Microsoft.Compute/virtualMachines/extensions",
+					"name" : "webserver/RunAutomation",
+					"apiVersion" : "[variables('apiVersion')]",
+					"location" : "[resourceGroup().location]",
+					"dependsOn" : [
+						"[concat('Microsoft.Compute/virtualMachines/', parameters('webServerName'))]",
+						"[concat('Microsoft.Compute/virtualMachines/', parameters('webServerName'), '/WebHost')]"
+					],
+					"properties" : {
+						"publisher" : "Microsoft.Compute",
+						"type" : "CustomScriptExtension",
+						"typeHandlerVersion" : "1.3",
+						"autoUpgradeMinorVersion" : "true",
+						"settings" : {
+							"fileUris" : [
+								"[variables('wsCustomScriptFileUri')]"
+							],
+							"commandToExecute" : "[variables('wsCommandToExecute')]"
+						},
+						"protectedSettings" : null
+					}
 				}
 			]
 		}
