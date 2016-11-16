@@ -1,9 +1,12 @@
-﻿
-Configuration WebHost
+﻿Configuration WebHost
 {
-    param ($MachineName) 
+    param 
+    (
+        [Parameter(Mandatory)]
+        [String]$MachineName
+    ) 
 
-    Node $MachineName
+    Node localhost
     {
         # Install the IIS role 
         WindowsFeature IIS 
