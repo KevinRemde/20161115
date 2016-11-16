@@ -6,7 +6,7 @@
         [String]$MachineName
     ) 
 
-    Node localhost
+    Node $MachineName
     {
         # Install the IIS role 
         WindowsFeature IIS 
@@ -46,14 +46,14 @@
         }
 
         WindowsFeature FileServer 
-	{
-            Ensure="Present"
-            Name="FS-FileServer"
+	    {
+            Ensure          = "Present"
+            Name            = "FS-FileServer"
         }
-	WindowsFeature MessageQueueFeature
-	{
-	    Ensure = "Present"
-	    Name = "MSMQ"
-	}		
+	    WindowsFeature MessageQueueFeature
+	    {
+	        Ensure          = "Present"
+	        Name            = "MSMQ"
+	    }		
     }
 }

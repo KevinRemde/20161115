@@ -87,7 +87,11 @@
 		"feSubnetId" : "[concat(variables('vnetID'),'/subnets/', variables('feSubnetName'))]",
 		"labSubnetId" : "[concat(variables('vnetID'),'/subnets/', variables('labSubnetName'))]",
 		"vnetTemplateUri" : "[concat(parameters('assetLocation'),'vnet.json')]",
-		"vnetwithDNSTemplateUri" : "[concat(parameters('assetLocation'),'vnet-with-dns-server.json')]"
+		"vnetwithDNSTemplateUri" : "[concat(parameters('assetLocation'),'vnet-with-dns-server.json')]",
+		"wsCustomScriptFileToRun" : "ConfigWebServer.ps1",
+		"wsCustomScriptFileUri" : "[concat(parameters('assetLocation'), variables('wsCustomScriptFileToRun'))]",
+		"wsCommandToExecute" : "[concat('powershell.exe -File', ' ', variables('wsCustomScriptFileToRun'))]"
+
 	},
 	"resources" : [{
 			"type" : "Microsoft.Network/publicIPAddresses",
@@ -246,6 +250,28 @@
 							"Properties" : {
 								"MachineName" : "[parameters('webServerName')]"
 							}
+						},
+						"protectedSettings" : null
+					}
+				}, {		
+					"type" : "Microsoft.Compute/virtualMachines/extensions",
+					"name" : "[concat(parameters('webServerName'),'/RunScript')]",
+					"apiVersion" : "[variables('apiVersion')]",
+					"location" : "[resourceGroup().location]",
+					"dependsOn" : [
+						"[concat('Microsoft.Compute/virtualMachines/', parameters('webServerName'))]",
+						"[concat('Microsoft.Compute/virtualMachines/', parameters('webServerName'), '/WebHost')]"
+					],
+					"properties" : {
+						"publisher" : "Microsoft.Compute",
+						"type" : "CustomScriptExtension",
+						"typeHandlerVersion" : "1.3",
+						"autoUpgradeMinorVersion" : "true",
+						"settings" : {
+							"fileUris" : [
+								"[variables('wsCustomScriptFileUri')]"
+							],
+							"commandToExecute" : "[variables('wsCommandToExecute')]"
 						},
 						"protectedSettings" : null
 					}
