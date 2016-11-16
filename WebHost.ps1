@@ -55,5 +55,10 @@
 	        Ensure          = "Present"
 	        Name            = "MSMQ"
 	    }		
+	    WindowsFeature MessageQueueTriggers
+	    {
+	        Ensure          = "Present"
+	        Name            = "MSMQ-Triggers"
+	    }		
     }
 }
