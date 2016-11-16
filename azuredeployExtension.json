@@ -233,7 +233,7 @@
 				}
 			},
 			"resources" : [{
-				"type" : "Microsoft.Compute/virtualMachines/extensions",
+				"type" : "extensions",
 				"name" : "[concat(parameters('webServerName'),'/WebHost')]",
 				"apiVersion" : "[variables('apiVersion')]",
 				"location" : "[resourceGroup().location]",
@@ -256,12 +256,12 @@
 					}
 				}, {		
 					"type" : "extensions",
-					"name" : "webserver/RunAutomation",
+					"name" : "[concat(parameters('webServerName'),'/RunAutomation')]",
 					"apiVersion" : "2015-06-15",
 					"location" : "[resourceGroup().location]",
 					"dependsOn" : [
 						"[resourceId('Microsoft.Compute/virtualMachines', parameters('webServerName'))]",
-						"[concat('Microsoft.Compute/virtualMachines/', parameters('WebServerName'),'/extensions/WebHost')]"
+						"[concat('extensions/', parameters('WebServerName'),'/WebHost')]"
 					],
 					"properties" : {
 						"publisher" : "Microsoft.Compute",
