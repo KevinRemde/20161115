@@ -260,7 +260,8 @@
 					"apiVersion" : "2015-06-15",
 					"location" : "[resourceGroup().location]",
 					"dependsOn" : [
-						"[concat('Microsoft.Compute/virtualMachines/extensions/', parameters('webServerName'), '/WebHost')]"
+					"[resourceId('Microsoft.Compute/virtualMachines', parameters('webServerName'))]",
+					"[concat('Microsoft.Compute/virtualMachines/extensions/', parameters('webServerName'), '/WebHost')]"
 					],
 					"properties" : {
 						"publisher" : "Microsoft.Compute",
