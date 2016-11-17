@@ -32,9 +32,11 @@ $templateFileLoc = $localAssets + "azuredeploy.json"
 
 # Use these if you want to drive the deployment from Github-based template. 
 #
-# $assetLocation = "https://rawgit.com/KevinRemde/AADSCDemoBase/master/" 
+# $assetLocation = "https://rawgit.com/KevinRemde/20161115/master/" 
 # If the rawgit.com path is not available, you can try un-commenting the following line instead...
-$assetLocation = "https://cgiresources.blob.core.windows.net/files/"
+# 
+# $assetLocation = "https://cgiresources.blob.core.windows.net/files/"
+$assetLocation = "https://raw.githubusercontent.com/KevinRemde/20161115/master/"
 $templateFileURI  = $assetLocation + "azuredeploy.json"
 # $parameterFileURI = $assetLocation + "azuredeploy.parameters.json" # Use only if you want to use Kevin's defaults (not recommended)
 
