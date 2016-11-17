@@ -48,7 +48,7 @@ $templateFileURI  = $assetLocation + "azuredeploy.json"
 # Those names are created by the template using randomly generated complex names, based on 
 # the resource group ID.
 
-$loc = "East US"
+$loc = "West US"
 
 <#
 $machine = "fileserver"
