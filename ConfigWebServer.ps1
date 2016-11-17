@@ -129,7 +129,16 @@ is used.
 Unzip-File -File C:\Files\files.zip -Destination C:\files\
 Remove-Item -Path C:\Files\files.zip
 
+# Set the timezone
+Find-PackageProvider -Name "Nuget" | Install-PackageProvider -Force
+install-module timezone -Force
+Set-Timezone "Eastern Standard Time"
 
+# Initialize ,Partition and Format the Data disk
+Initialize-Disk -Number 2
+
+$Partition = New-Partition -DiskNumber 2 -AssignDriveLetter -UseMaximumSize
+Format-Volume -DriveLetter (Get-Partition -DiskNumber 2 -PartitionNumber 2).DriveLetter -FileSystem NTFS -NewFileSystemLabel Data -Force 
 # Import-Module ServerManager
 
 # Install AD Administration Tools locally

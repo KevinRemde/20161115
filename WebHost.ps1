@@ -1,6 +1,4 @@
-﻿Configuration WebHost
-{
-    param 
+﻿param 
     (
         [Parameter(Mandatory)]
         [String]$MachineName,
@@ -9,9 +7,10 @@
         [String]$FileURI
     ) 
 
+Configuration WebHost
+{
     Node $MachineName
     {
- <#
         # Install the IIS role 
         WindowsFeature IIS 
         { 
@@ -64,13 +63,12 @@
 	        Ensure          = "Present"
 	        Name            = "MSMQ-Triggers"
 	    }
-#>		
+
         Script ConfigureVM 
         { 
 	  	    SetScript = 
             { 
 	            $dir = "c:\Files"
-#               $FileURI = "https://raw.githubusercontent.com/KevinRemde/20161115/master/files.zip"
                 New-Item $dir -ItemType directory
                 $output = "$dir\Files.zip"
                 (New-Object System.Net.WebClient).DownloadFile($FileURI,$output)
