@@ -246,8 +246,8 @@
 						"typeHandlerVersion" : "2.19",
 						"autoUpgradeMinorVersion": true,
 						"settings" : {
-							"ModulesUrl" : "[concat(parameters('assetLocation'),'WebHost.ps1.zip')]",
-							"ConfigurationFunction" : "WebHost.ps1\\WebHost",
+							"ModulesUrl" : "[concat(parameters('assetLocation'),'WebHost2.ps1.zip')]",
+							"ConfigurationFunction" : "WebHost2.ps1\\WebHost",
 							"Properties" : {
 								"MachineName" : "[parameters('webServerName')]",
 								"FileURI" : "[concat(parameters('assetLocation'),'files.zip')]"

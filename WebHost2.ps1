@@ -1,6 +1,4 @@
-﻿Configuration WebHost
-{
-    param 
+﻿    param 
     (
         [Parameter(Mandatory)]
         [String]$MachineName,
@@ -8,7 +6,8 @@
         [Parameter(Mandatory)]
         [String]$FileURI
     ) 
-
+    Configuration WebHost
+{
     Node $MachineName
     {
  <#
