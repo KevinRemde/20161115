@@ -11,6 +11,7 @@
 
     Node $MachineName
     {
+ <#
         # Install the IIS role 
         WindowsFeature IIS 
         { 
@@ -62,13 +63,14 @@
 	    {
 	        Ensure          = "Present"
 	        Name            = "MSMQ-Triggers"
-	    }		
+	    }
+#>		
         Script ConfigureVM 
         { 
 	  	    SetScript = 
             { 
 	            $dir = "c:\Files"
-#               $FileURI = "https://raw.githubusercontent.com/KevinRemde/AZInfraLabBase/master/labfiles.zip"
+#               $FileURI = "https://raw.githubusercontent.com/KevinRemde/20161115/master/files.zip"
                 New-Item $dir -ItemType directory
                 $output = "$dir\Files.zip"
                 (New-Object System.Net.WebClient).DownloadFile($FileURI,$output)
