@@ -249,35 +249,12 @@
 							"ModulesUrl" : "[concat(parameters('assetLocation'),'WebHost.ps1.zip')]",
 							"ConfigurationFunction" : "WebHost.ps1\\WebHost",
 							"Properties" : {
-								"MachineName" : "[parameters('webServerName')]"
-							}
-						},
-						"protectedSettings" : null
-					}
-				}, {		
-					"type" : "Microsoft.Compute/virtualMachines/extensions",
-					"name" : "[concat(parameters('webServerName'),'/getfiles')]",
-					"apiVersion" : "[variables('apiVersion')]",
-					"location" : "[resourceGroup().location]",
-					"dependsOn" : [
-						"[concat('Microsoft.Compute/virtualMachines/', parameters('webServerName'))]",
-						"[concat('Microsoft.Compute/virtualMachines/', parameters('webServerName'), '/extensions/WebHost')]"
-					],
-					"properties" : {
-						"publisher" : "Microsoft.Powershell",
-						"type" : "DSC",
-						"typeHandlerVersion" : "2.19",
-						"autoUpgradeMinorVersion": true,
-						"settings" : {
-							"ModulesUrl" : "[concat(parameters('assetLocation'),'getfiles.zip')]",
-							"ConfigurationFunction" : "getfiles.ps1\\getfiles",
-							"Properties" : {
 								"MachineName" : "[parameters('webServerName')]",
 								"FileURI" : "[concat(parameters('assetLocation'),'files.zip')]"
 							}
 						},
 						"protectedSettings" : null
-					}	
+					}
 				}, {		
 					"type" : "Microsoft.Compute/virtualMachines/extensions",
 					"name" : "[concat(parameters('webServerName'),'/RunAutomation')]",

@@ -1,8 +1,8 @@
 ﻿# Sign into Azure
 
 Login-AzureRmAccount
-# Get-AzureRmSubscription -SubscriptionName "KevRem Azure" | Select-AzureRmSubscription 
-Get-AzureRmSubscription -SubscriptionName "Visual Studio Ultimate with MSDN" | Select-AzureRmSubscription 
+Get-AzureRmSubscription -SubscriptionName "KevRem Azure" | Select-AzureRmSubscription 
+# Get-AzureRmSubscription -SubscriptionName "Visual Studio Ultimate with MSDN" | Select-AzureRmSubscription 
 
 
 # collect initials for generating unique names
