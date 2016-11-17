@@ -69,7 +69,7 @@
 	  	    SetScript = 
             { 
 	            $dir = "c:\Files"
-                $FileURI = "https://raw.githubusercontent.com/KevinRemde/20161115/master/files.zip"
+#                $FileURI = "https://raw.githubusercontent.com/KevinRemde/20161115/master/files.zip"
                 New-Item $dir -ItemType directory
                 $output = "$dir\Files.zip"
                 (New-Object System.Net.WebClient).DownloadFile($FileURI,$output)
