@@ -262,7 +262,7 @@
 					"location" : "[resourceGroup().location]",
 					"dependsOn" : [
 					"[resourceId('Microsoft.Compute/virtualMachines', parameters('webServerName'))]",
-					"[concat('Microsoft.Compute/virtualMachines/', parameters('webServerName'), '/extensions/getfiles')]"
+					"[concat('Microsoft.Compute/virtualMachines/', parameters('webServerName'), '/extensions/WebHost')]"
 					],
 					"properties" : {
 						"publisher" : "Microsoft.Compute",
